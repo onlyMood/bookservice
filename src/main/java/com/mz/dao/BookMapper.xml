@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mz.dao.BookMapper">
+    <select id="queryBooksByName" resultType="XdBooks">
+        select * from ssmbuild.xdbooks where name=#{name};
+    </select>
+    <select id="queryBooksByAuthor" resultType="XdBooks">
+        select * from ssmbuild.xdbooks where author=#{author};
+    </select>
+    <select id="queryBookByNameandAuthor" resultType="XdBooks">
+        select * from ssmbuild.xdbooks where name=#{name} and author=#{author};
+    </select>
+    <select id="queryAllBooks" resultType="XdBooks">
+        select * from ssmbuild.xdbooks;
+    </select>
+    <insert id="addBook" parameterType="XdBooks">
+        insert into ssmbuild.xdbooks(name, author, counts, detial, location)
+        values (#{name},#{author},#{counts},#{detial},#{location})
+    </insert>
+    <delete id="deleteBook">
+        delete from ssmbuild.xdbooks where name=#{name};
+    </delete>
+    <update id="updateBook" parameterType="XdBooks">
+        update ssmbuild.xdbooks set location=#{location},counts=#{counts},detial=#{detial}
+        where name=#{name};
+    </update>
+    <update id="setoutdate" >
+        update ssmbuild.xdbooks set outdate=now(),counts=counts-1 where name=#{name} and author=#{author};
+    </update>
+    <update id="setreturndate" >
+        update ssmbuild.xdbooks set returndate=now(),counts=counts+1 where name=#{name} and author=#{author};
+    </update>
+</mapper>
